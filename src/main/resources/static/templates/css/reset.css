@@ -1,0 +1,16 @@
+@charset "utf-8";
+/* CSS Document */
+/*清除格式*/
+body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div,dl,dt,dd,input{margin:0;padding:0;}
+body,button,input,select,textarea{font-size:12px;}
+address,cite,dfn,em,var{font-style:normal;}
+a{text-decoration:none;}
+a:hover{text-decoration:none;}
+img{border:none;}
+ul,ol{list-style:none;}
+input,select,textarea{outline:none;}
+textarea{resize:none;}
+table{border-collapse:collapse;border-spacing:0;}
+/*清除浮动*/
+.clearfix:after{content:"";display:block;clear:both;}
+.clearfix{zoom:1;}

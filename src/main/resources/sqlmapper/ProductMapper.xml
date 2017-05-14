@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hunantongxinqianjin.web.mapper.ProductMapper">
+    <resultMap type="cn.hunantongxinqianjin.web.entity.Product" id="productMap">
+        <result column="id" property="id"/>
+        <result column="topic" property="topic"/>
+        <result column="message" property="message"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="product_url" property="productUrl"/>
+        <result column="product_name" property="productName"/>
+        <result column="img_url" property="imgUrl"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+
+    </resultMap>
+
+    <select id="getAllProducts" resultMap="productMap">
+        SELECT * FROM product where is_delete=0
+
+    </select>
+
+    <select id="getProductByPage" resultMap="productMap">
+        SELECT * FROM product where is_delete=0 order by created_at limit #{1},#{0}
+    </select>
+
+    <select id="getAllProductCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM product where is_delete=0
+    </select>
+
+</mapper>
+

@@ -1,0 +1,19 @@
+server:
+  port: 8535
+
+jdbc_test:
+  driverClass: com.mysql.jdbc.Driver
+  JdbcUrl: jdbc:mysql://112.74.78.70:3306/web
+  User: root
+  Password: Yzw18873219570
+
+mybatis:
+  typeAliasesPackage: cn.hunantongxinqianjin
+  mapperLocations: classpath:/sqlmapper/*.xml
+  configLocation: classpath:/mybatis-config.xml
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+    mode: LEGACYHTML5

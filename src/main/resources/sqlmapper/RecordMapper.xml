@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hunantongxinqianjin.web.mapper.RecordMapper">
+    <resultMap type="cn.hunantongxinqianjin.web.entity.Record" id="recordMap">
+        <result column="id" property="id"/>
+        <result column="ip" property="ip"/>
+        <result column="product_id" property="productId"/>
+        <result column="click_num" property="clickNum"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+
+    </resultMap>
+    <insert id="addRecord">
+        INSERT into record(ip,product_id,created_at,updated_at) VALUES (#{1},#{0},now(),now())
+    </insert>
+
+    <select id="getRecordByDateAndIp" resultMap="recordMap">
+        SELECT * FROM record where ip=#{0} and date(created_at)=date(now()) and product_id=#{1}
+    </select>
+
+
+</mapper>
+
