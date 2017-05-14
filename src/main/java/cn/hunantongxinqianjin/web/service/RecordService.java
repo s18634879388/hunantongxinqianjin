@@ -26,6 +26,28 @@ public class RecordService {
     }
 
     public int getCountByPro(Long id) {
-        return 1;
+
+        int count = recordMapper.getCountByPro(id,"day");
+        return count;
+    }
+
+    public int getclickNumMonthByPro(Long id) {
+        int count = recordMapper.getCountByPro(id,"mon");
+        return count;
+    }
+
+    public int getclickNumOfMonthByPro(Long id) {
+        int count = recordMapper.getCountByProAndType(id,"mon");
+        return count;
+    }
+
+    public int getclickNumYearByPro(Long id) {
+        int count = recordMapper.getCountByPro(id,"year");
+        return count;
+    }
+
+    public int getclickNumAllByPro(Long id) {
+        int count = recordMapper.getCountByPro(id,"all");
+        return count;
     }
 }

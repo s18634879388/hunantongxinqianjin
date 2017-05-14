@@ -65,7 +65,7 @@ public class ProductController {
         return "backintroduce";
     }
 
-    @RequestMapping(value = "/back-login.html",method = RequestMethod.GET)
+        @RequestMapping(value = "/back-login.html",method = RequestMethod.GET)
     public String backLogin(Model model){
         return "backlogin";
     }
@@ -130,6 +130,35 @@ public class ProductController {
         }
         return "修改成功";
     }
+
+    @RequestMapping(value = "/back-product-num.html",method = RequestMethod.GET)
+    public String backProNumList(Model model,@RequestParam(value = "pageNo") String pageNo){
+        PageRequest pageRequest = new PageRequest(10,Integer.parseInt(pageNo),0,true);
+        List<Product> products = productService.getFirstProducts(pageRequest);
+        for (Product p:products
+                ) {
+            int clickNum = recordService.getCountByPro(p.getId());
+            int clickNumMonth = recordService.getclickNumMonthByPro(p.getId());
+            int clickNumOfMonth = recordService.getclickNumOfMonthByPro(p.getId());
+            int clickNumYear = recordService.getclickNumYearByPro(p.getId());
+            int clickNumAll = recordService.getclickNumAllByPro(p.getId());
+            p.setClickNum(clickNum);
+            p.setClickNumMonth(clickNumMonth);
+            p.setClickNumOfMonth(clickNumOfMonth);
+            p.setClickNumYear(clickNumYear);
+            p.setClickNumYear(clickNumYear);
+            p.setClickNumAll(clickNumAll);
+        }
+        int count = productService.getAllProductCount();
+        int pageCount = (count+pageRequest.getPageSize()-1)/pageRequest.getPageSize();
+        model.addAttribute("pageCount",pageCount);
+        model.addAttribute("products",products);
+        model.addAttribute("pageNo",pageRequest.getPageNo());
+        model.addAttribute("recordCount",count);
+        return "backpronum_list";
+    }
+
+
 
 
 

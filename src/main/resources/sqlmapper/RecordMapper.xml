@@ -20,6 +20,28 @@
         SELECT * FROM record where ip=#{0} and date(created_at)=date(now()) and product_id=#{1}
     </select>
 
+    <select id="getCountByPro" resultType="java.lang.Integer">
+        SELECT count(*) FROM record where product_id=#{0}
+        <if test="param2=='day' ">
+          AND date(created_at)=date(now())
+        </if>
+        <if test="param2=='mon' ">
+            AND EXTRACT(MONTH FROM created_at) = EXTRACT(MONTH FROM now()) AND EXTRACT(YEAR FROM created_at) = EXTRACT(YEAR FROM now())
+        </if>
+        <if test="param2=='year' ">
+            AND EXTRACT(YEAR FROM created_at) = EXTRACT(YEAR FROM now())
+        </if>
+    </select>
+
+    <select id="getCountByProAndType" resultType="java.lang.Integer">
+        SELECT count(*) FROM record where product_id=#{0}
+        <if test="param2=='mon' ">
+            AND created_at > DATE_SUB(now(),INTERVAL 30 MONTH)
+        </if>
+    </select>
+
+
+
 
 </mapper>
 

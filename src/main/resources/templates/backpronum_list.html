@@ -11,28 +11,9 @@
 <script type="text/javascript" src="/templates/scripts/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
 <link rel="stylesheet" type="text/css" href="/templates/style/authority/jquery.fancybox-1.3.4.css" media="screen"></link>
 <script type="text/javascript" src="/templates/scripts/artDialog/artDialog.js?skin=default"></script>
-<title>信息管理系统</title>
+<title>管理系统</title>
 <script type="text/javascript">
-	$(document).ready(function(){
-	    /**编辑   **/
-	    $("a.edit").fancybox({
-	    	'width' : 733,
-	        'height' : 530,
-	        'type' : 'iframe',
-	        'hideOnOverlayClick' : false,
-	        'showCloseButton' : false,
-	        'onClosed' : function() {
-	        	window.location.href = '/back-record-list.html?pageNo='+[[${pageNo}]];
-	        }
-	    });
-	});
 
-
-	/** 普通跳转 **/
-	function jumpNormalPage(page){
-		alert(page);
-		$("#submitForm").attr("action", "/back-record-list.html?page=" + page).submit();
-	}
 	function jumpNormalPage3(){
 		var p = [[${pageCount}]]
 		var pc = document.getElementById('jumpNumTxt').value;
@@ -79,42 +60,36 @@
 					</div>
 				</div>
 			</div>
-			<div class="ui_content">
-				<div class="ui_tb">
-					<table class="table" cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
-						<tr>
-							<!--<th><input type="checkbox" id="all" onclick="selectOrClearAllCheckbox(this);" />-->
-							<!--</th>-->
+						<div class="ui_content">
+							<div class="ui_tb">
+						<table class="table" cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
+							<tr>
 							<th >产品</th>
-							<th >日点击人数</th>
-							<th >图片</th>
-							<th >标题</th>
-							<th >内容</th>
-							<th >链接</th>
-							<th >添加日期</th>
-							<th >状态</th>
-							<th >操作</th>
+							<th >当日点击人数</th>
+							<th >当月点击人数</th>
+							<th >一月内点击人数</th>
+							<th >当年击人数</th>
+							<th >总点击量</th>
+							<!--<th >状态</th>-->
+							<!--<th >操作</th>-->
 						</tr>
 						
 							<tr  th:each="product,userStat : ${products}">
-								<!--<td><input type="checkbox" name="IDCheck" value="14458579642011" class="acb" /></td>-->
 								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.productName}">余额宝</td>
 								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.clickNum}">10000</td>
-								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.imgUrl}">http://www.baidu.com</td>
-								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.topic}">现金白卡</td>
-								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.message}">说到就到现金极速贷款</td>
-								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.productUrl}">http://www.baidu.com</td>
-								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${#dates.format(product.createdAt, 'yyyy-MM-dd')}">2017-05-06</td>
-								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.isDelete}">下架</td>
-								<td>
-									<a th:href="@{/back-record-edit.html(proId=${product.id})}" class="edit">编辑</a>
-									<a href="javascript:del('14458579642011');">上线</a>
-								</td>
+								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.clickNumMonth}">100</td>
+								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.clickNumOfMonth}">100100</td>
+								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.clickNumYear}">100</td>
+								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.clickNumAll}">100</td>
+								<!--<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.productUrl}">100</td>-->
+								<!--<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${#dates.format(product.createdAt, 'yyyy-MM-dd')}">2017-05-06</td>-->
+								<!--<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.isDelete}">下架</td>-->
+								<!--<td>-->
+									<!--<a th:href="@{/back-record-edit.html(proId=${product.id})}" class="edit">编辑</a>-->
+									<!--<a href="javascript:del('14458579642011');">上线</a>-->
+								<!--</td>-->
 
 							</tr>
-
-
-
 					</table>
 				</div>
 				<div class="ui_tb_h30">
@@ -128,26 +103,18 @@
 						页
 					</div>
 					<div class="ui_frt">
-						<!--    如果是第一页，则只显示下一页、尾页 -->
-						
-							<!--<input type="button" value="首页" class="ui_input_btn01" />-->
 							<input type="button" value="上一页" class="ui_input_btn01" onclick="jumpNormalPage2();" />
 							<input type="button" value="下一页" class="ui_input_btn01"
 								onclick="jumpNormalPage1();" />
-							<!--<input type="button" value="尾页" class="ui_input_btn01"-->
-								<!--onclick="jumpNormalPage(9);" />-->
-						
-						
-						
-						<!--     如果是最后一页，则只显示首页、上一页 -->
 						
 						转到第<input type="text" id="jumpNumTxt" class="ui_input_txt01" />页
 							 <input type="button" class="ui_input_btn01" value="跳转" onclick="jumpNormalPage3();" />
 					</div>
 				</div>
 			</div>
-		</div>
-	</form>
+
+	</div>
+		</form>
 <div style="display:none"><script src='http://v7.cnzz.com/stat.php?id=155540&web_id=155540' language='JavaScript' charset='gb2312'></script></div>
 </body>
 </html>

@@ -10,4 +10,8 @@ public interface RecordMapper {
     int addRecord(Long id, String ip);
 
     Record getRecordByDateAndIp(String ip,Long id);
+
+    int getCountByPro(Long id,String type);
+
+    int getCountByProAndType(Long id, String mon);
 }

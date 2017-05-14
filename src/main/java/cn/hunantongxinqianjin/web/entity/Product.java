@@ -17,6 +17,10 @@ public class Product implements Serializable {
     private Date createdAt; //创建时间
     private Date updatedAt; //修改时间
     private int clickNum;//日流量
+    private int clickNumMonth;//月流量
+    private int clickNumOfMonth;//一月内流量
+    private int clickNumYear;//年流量
+    private int clickNumAll;//所有流量
 
     public Long getId() {
         return id;
@@ -96,5 +100,37 @@ public class Product implements Serializable {
 
     public void setClickNum(int clickNum) {
         this.clickNum = clickNum;
+    }
+
+    public int getClickNumMonth() {
+        return clickNumMonth;
+    }
+
+    public void setClickNumMonth(int clickNumMonth) {
+        this.clickNumMonth = clickNumMonth;
+    }
+
+    public int getClickNumOfMonth() {
+        return clickNumOfMonth;
+    }
+
+    public void setClickNumOfMonth(int clickNumOfMonth) {
+        this.clickNumOfMonth = clickNumOfMonth;
+    }
+
+    public int getClickNumYear() {
+        return clickNumYear;
+    }
+
+    public void setClickNumYear(int clickNumYear) {
+        this.clickNumYear = clickNumYear;
+    }
+
+    public int getClickNumAll() {
+        return clickNumAll;
+    }
+
+    public void setClickNumAll(int clickNumAll) {
+        this.clickNumAll = clickNumAll;
     }
 }
