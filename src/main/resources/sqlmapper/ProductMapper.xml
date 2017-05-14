@@ -29,5 +29,34 @@
         SELECT count(*) FROM product where is_delete=0
     </select>
 
+    <insert id="addProduct">
+        INSERT INTO product(topic,message,is_delete,product_url,product_name,img_url,created_at,updated_at) VALUES (#{topic},#{message},0,#{productUrl},#{productName},#{imgUrl},now(),now())
+    </insert>
+
+    <update id="modifyProduct">
+        UPDATE product SET
+        <if test="message!=null">
+            message=#{message},
+        </if>
+        <if test="productName!=null">
+            product_name=#{productName},
+        </if>
+        <if test="imgUrl!=null">
+            img_url=#{imgUrl},
+        </if>
+        <if test="topic!=null">
+            topic=#{topic},
+        </if>
+        <if test="productUrl!=null">
+            product_url=#{productUrl},
+        </if>
+        updated_at=now()
+        where id = #{id}
+    </update>
+
+    <select id="getProductById" resultMap="productMap">
+        SELECT * FROM product where id=#{0}
+    </select>
+
 </mapper>
 

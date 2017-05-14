@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<title>信息管理系统</title>
+<title>管理系统</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <script type="text/javascript" src="/templates/scripts/jquery/jquery-1.7.1.js"></script>
 <link href="/templates/style/authority/basic_layout.css" rel="stylesheet" type="text/css">
@@ -16,10 +16,22 @@
 		/*
 		 * 提交
 		 */
+		$("#fyZldz6").attr('disabled', 'disabled');
+
 		$("#submitbutton").click(function() {
+			$("#submitbutton").attr('disabled', 'disabled');
 			if(validateForm()){
+				alert("111")
 				checkFyFhSubmit();
 			}
+		});
+
+		$("#NoPicture").click(function () {
+			$("#fyZldz6").attr('disabled', 'disabled');
+		});
+
+		$("#YesPicture").click(function () {
+			$("#fyZldz6").attr('disabled',false);
 		});
 		
 		/*
@@ -70,64 +82,12 @@
 	
 	/** 检测房源房号是否存在并提交form  **/
 	function checkFyFhSubmit(){
-		// 分别获取小区编号、栋号、层号、房号
-		var fyID = $('#fyID').val();
-		var fyXqCode = $("#fyXq").val();
-		var fyDh = $("#fyDh").val();
-		var fyCh = $("#fyCh").val();	
-		var fyFh = $("#fyFh").val();
-		if(fyXqCode!="" && fyDh!="" && fyCh!="" && fyFh!=""){
-			// 给房屋坐落地址赋值
-			$("#fyZldz").val($('#fyDh option:selected').text()  + fyCh + "-" + fyFh);
-			// 异步判断该房室是否存在，如果已存在，给用户已提示哦
-			$.ajax({
-				type:"POST",
-				url:"checkFyFhIsExists.action",
-				data:{"fangyuanEntity.fyID":fyID,"fangyuanEntity.fyXqCode":fyXqCode, "fangyuanEntity.fyDhCode":fyDh, "fangyuanEntity.fyCh":fyCh, "fangyuanEntity.fyFh":fyFh},
-				dataType : "text",
-				success:function(data){
-// 					alert(data);
-					// 如果返回数据不为空，更改“房源信息”
-					if(data=="1"){
-						 art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'该房室在系统中已经存在哦，\n请维护其他房室数据', ok:true,});
-						 $("#fyFh").css("background", "#EEE");
-						 $("#fyFh").focus();
-						 return false;
-					}else{
-						$("#submitForm").attr("action", "/xngzf/archives/saveOrUpdateFangyuan.action").submit();
-					}
-				}
-			});
-		}
-		return true;
+		$("#submitForm").submit();
 	}
 	
 	/** 表单验证  **/
 	function validateForm(){
-		if($("#fyXqName").val()==""){
-			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写房源小区', ok:true,});
-			return false;
-		}
-		if($("#fyDh").val()==""){
-			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写房源栋号', ok:true,});
-			return false;
-		}
-		if($("#fyCh").val()==""){
-			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写房源层号', ok:true,});
-			return false;
-		}
-		if($("#fyFh").val()==""){
-			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写房源房号', ok:true,});
-			return false;
-		}
-		if($("#fyZongMj").val()==""){
-			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写房源面积', ok:true,});
-			return false;
-		}
-		if($("#fyJizuMj").val()==""){
-			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写计租面积', ok:true,});
-			return false;
-		}
+
 		if($("#fyZldz1").val()==""){
 			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写产品名称', ok:true,});
 			return false;
@@ -153,7 +113,7 @@
 </script>
 </head>
 <body>
-<form id="submitForm" name="submitForm" action="/xngzf/archives/initFangyuan.action" method="post">
+<form id="submitForm" name="submitForm" action="/modify-product.html" method="POST" enctype="multipart/form-data">
 	<input type="hidden" name="fyID" value="14458625716623" id="fyID"/>
 	<div id="container">
 		<div id="nav_links">
@@ -169,33 +129,49 @@
 				<tr>
 					<td class="ui_text_rt" width="80">产品</td>
 					<td class="ui_text_lt">
-						<input type="text" id="fyZldz1" name="fangyuanEntity.fyZldz" value="借贷宝" class="ui_input_txt02"/>
+						<input type="text" id="fyZldz1" maxlength="10" name="productName" th:value="${proMod.productName}" class="ui_input_txt02"/>
 					</td>
 				</tr>
 				<tr>
 					<td class="ui_text_rt">图片链接</td>
 					<td class="ui_text_lt">
-						<input type="text" id="fyZldz2" name="fangyuanEntity.fyZldz" value="" class="ui_input_txt02"/>
+						<input hidden="hidden" name="proId" th:value="${proMod.id}" />
+						<input type="text" id="fyZldz2" maxlength="254"  disabled="disabled" th:value="${proMod.imgUrl}" class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">更换图片</td>
+					<td class="ui_text_lt">
+						&nbsp;&nbsp;&nbsp; 是<input type="radio" name="myradio"  value="0" runat="server" id="YesPicture" />&nbsp;&nbsp;&nbsp;
+						否<input type="radio" name="myradio" checked  value="1" runat="server" id="NoPicture"/>
+					</td>
+
+				</tr>
+				<tr>
+					<td class="ui_text_rt">上传图片</td>
+					<td class="ui_text_lt">
+						<input type="file" id="fyZldz6"  name="imgUrl" class="ui_input_txt02"/>
 					</td>
 				</tr>
 				<tr>
 					<td class="ui_text_rt">标题</td>
 					<td class="ui_text_lt">
-						<input type="text" id="fyZldz3" name="fangyuanEntity.fyZldz" value="瑞景河畔16号楼1-112" class="ui_input_txt02"/>
+						<input type="text" id="fyZldz3" maxlength="5" name="topic" th:value="${proMod.topic}" class="ui_input_txt02"/>
 					</td>
 				</tr>
 				<tr>
 					<td class="ui_text_rt">内容</td>
 					<td class="ui_text_lt">
-						<input type="text" id="fyZldz4" name="fangyuanEntity.fyZldz" value="瑞景河畔16号楼1-112" class="ui_input_txt02"/>
+						<input type="text" id="fyZldz4" maxlength="10" name="message" th:value="${proMod.message}" class="ui_input_txt02"/>
 					</td>
 				</tr>
 				<tr>
 					<td class="ui_text_rt">链接地址</td>
 					<td class="ui_text_lt">
-						<input type="text" id="fyZldz5" name="fangyuanEntity.fyZldz" value="瑞景河畔16号楼1-112" class="ui_input_txt02"/>
+						<input type="text" id="fyZldz5" maxlength="254" name="productUrl" th:value="${proMod.productUrl}" class="ui_input_txt02"/>
 					</td>
 				</tr>
+
 				
 				
 				<tr>

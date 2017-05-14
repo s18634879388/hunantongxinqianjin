@@ -14,31 +14,6 @@
 <title>信息管理系统</title>
 <script type="text/javascript">
 	$(document).ready(function(){
-		/** 新增   **/
-	    $("#addBtn").fancybox({
-	    	'href'  : 'backhouse_edit.html',
-	    	'width' : 733,
-	        'height' : 530,
-	        'type' : 'iframe',
-	        'hideOnOverlayClick' : false,
-	        'showCloseButton' : false,
-	        'onClosed' : function() { 
-	        	window.location.href = '/back-record-list.html';
-	        }
-	    });
-		
-	    /** 导入  **/
-	    $("#importBtn").fancybox({
-	    	'href'  : '/xngzf/archives/importFangyuan.action',
-	    	'width' : 633,
-	        'height' : 260,
-	        'type' : 'iframe',
-	        'hideOnOverlayClick' : false,
-	        'showCloseButton' : false,
-	        'onClosed' : function() { 
-	        	window.location.href = '/back-record-list.html';
-	        }
-	    });
 		
 	    /**编辑   **/
 	    $("a.edit").fancybox({
@@ -47,81 +22,12 @@
 	        'type' : 'iframe',
 	        'hideOnOverlayClick' : false,
 	        'showCloseButton' : false,
-	        'onClosed' : function() { 
-	        	window.location.href = '/back-record-list.html';
+	        'onClosed' : function() {
+	        	window.location.href = '/back-record-list.html?pageNo='+[[${pageNo}]];
 	        }
 	    });
 	});
-	/** 用户角色   **/
-	var userRole = '';
 
-	/** 模糊查询来电用户  **/
-	function search(){
-		$("#submitForm").attr("action", "backhouse_list.html?page=" + 1).submit();
-	}
-
-	/** 新增   **/
-	function add(){
-		$("#submitForm").attr("action", "/xngzf/archives/luruFangyuan.action").submit();	
-	}
-	 
-	/** Excel导出  **/
-	function exportExcel(){
-		if( confirm('您确定要导出吗？') ){
-			var fyXqCode = $("#fyXq").val();
-			var fyXqName = $('#fyXq option:selected').text();
-//	 		alert(fyXqCode);
-			if(fyXqCode=="" || fyXqCode==null){
-				$("#fyXqName").val("");
-			}else{
-//	 			alert(fyXqCode);
-				$("#fyXqName").val(fyXqName);
-			}
-			$("#submitForm").attr("action", "/xngzf/archives/exportExcelFangyuan.action").submit();	
-		}
-	}
-	
-	/** 删除 **/
-	function del(fyID){
-		// 非空判断
-		if(fyID == '') return;
-		if(confirm("您确定要删除吗？")){
-			$("#submitForm").attr("action", "/xngzf/archives/delFangyuan.action?fyID=" + fyID).submit();			
-		}
-	}
-	
-	/** 批量删除 **/
-	function batchDel(){
-		if($("input[name='IDCheck']:checked").size()<=0){
-			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'至少选择一条', ok:true,});
-			return;
-		}
-		// 1）取出用户选中的checkbox放入字符串传给后台,form提交
-		var allIDCheck = "";
-		$("input[name='IDCheck']:checked").each(function(index, domEle){
-			bjText = $(domEle).parent("td").parent("tr").last().children("td").last().prev().text();
-// 			alert(bjText);
-			// 用户选择的checkbox, 过滤掉“已审核”的，记住哦
-			if($.trim(bjText)=="已审核"){
-// 				$(domEle).removeAttr("checked");
-				$(domEle).parent("td").parent("tr").css({color:"red"});
-				$("#resultInfo").html("已审核的是不允许您删除的，请联系管理员删除！！！");
-// 				return;
-			}else{
-				allIDCheck += $(domEle).val() + ",";
-			}
-		});
-		// 截掉最后一个","
-		if(allIDCheck.length>0) {
-			allIDCheck = allIDCheck.substring(0, allIDCheck.length-1);
-			// 赋给隐藏域
-			$("#allIDCheck").val(allIDCheck);
-			if(confirm("您确定要批量删除这些记录吗？")){
-				// 提交form
-				$("#submitForm").attr("action", "/xngzf/archives/batchDelFangyuan.action").submit();
-			}
-		}
-	}
 
 	/** 普通跳转 **/
 	function jumpNormalPage(page){
@@ -131,11 +37,12 @@
 	function jumpNormalPage3(){
 		var p = [[${pageCount}]]
 		var pc = document.getElementById('jumpNumTxt').value;
-		if (p>pc){
+		if (p>=pc){
 			window.location.href = '/back-record-list.html?pageNo='+pc;
 		}
 
 	}
+	//上一页
 	function jumpNormalPage2(){
 		var p = [[${pageNo}]]
 		var pc = [[${pageCount}]]
@@ -145,33 +52,17 @@
 		}
 
 	}
+	//下一页
 	function jumpNormalPage1(){
 		var p = [[${pageNo}]]
 		var pc = [[${pageCount}]]
 		p=p+1;
-		if (p<pc){
+		if (p<=pc){
 			window.location.href = '/back-record-list.html?pageNo='+p;
 		}
 
 	}
-	
-	/** 输入页跳转 **/
-	function jumpInputPage(totalPage){
-		// 如果“跳转页数”不为空
-		if($("#jumpNumTxt").val() != ''){
-			var pageNum = parseInt($("#jumpNumTxt").val());
-			// 如果跳转页数在不合理范围内，则置为1
-			if(pageNum<1 | pageNum>totalPage){
-				art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
-				pageNum = 1;
-			}
-			$("#submitForm").attr("action", "backhouse_list.html?page=" + pageNum).submit();
-		}else{
-			// “跳转页数”为空
-			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'请输入合适的页数，\n自动为您跳到首页', ok:true,});
-			$("#submitForm").attr("action", "backhouse_list.html?page=" + 1).submit();
-		}
-	}
+
 </script>
 <style>
 	.alt td{ background:black !important;}
@@ -236,126 +127,31 @@
 				<div class="ui_tb">
 					<table class="table" cellspacing="0" cellpadding="0" width="100%" align="center" border="0">
 						<tr>
-							<th width="30"><input type="checkbox" id="all" onclick="selectOrClearAllCheckbox(this);" />
-							</th>
-							<th>产品</th>
-							<th>日点击人数</th>
-							<th>图片</th>
-							<th>标题</th>
-							<th>内容</th>
-							<th>链接</th>
-							<th>添加日期</th>
-							<th>状态</th>
-							<th>操作</th>
+							<!--<th><input type="checkbox" id="all" onclick="selectOrClearAllCheckbox(this);" />-->
+							<!--</th>-->
+							<th >产品</th>
+							<th >日点击人数</th>
+							<th >图片</th>
+							<th >标题</th>
+							<th >内容</th>
+							<th >链接</th>
+							<th >添加日期</th>
+							<th >状态</th>
+							<th >操作</th>
 						</tr>
-							<tr>
-								<td><input type="checkbox" name="IDCheck" value="14458579642011" class="acb" /></td>
-								<td>借贷宝</td>
-								<td>5000</td>
-								<td>http://www.baidu.com</td>
-								<td>现金贷款</td>
-								<td>资料简单2000到手</td>
-								<td>http://www.baidu.com</td>
-								<td>2017-05-05</td>
-								<td>上线</td>
-								<td>
-									<a href="/back-record-edit.html" class="edit">编辑</a>
-									<a href="javascript:del('14458579642011');">下架</a>
-								</td>
-							</tr>
 						
-							<tr>
-								<td><input type="checkbox" name="IDCheck" value="14458579642011" class="acb" /></td>
-								<td>余额宝</td>
-								<td>10000</td>
-								<td>http://www.baidu.com</td>
-								<td>现金白卡</td>
-								<td>说到就到现金极速贷款</td>
-								<td>http://www.baidu.com</td>
-								<td>2017-05-06</td>
-								<td>下架</td>
-								<td>
-									<a href="backhouse_edit.html?fyID=14458579642011" class="edit">编辑</a>
-									<a href="javascript:del('14458579642011');">上线</a>
-								</td>
-							</tr>
-						
-							<tr>
-								<td><input type="checkbox" name="IDCheck" value="14458579642011" class="acb" /></td>
-								<td>借贷宝</td>
-								<td>5000</td>
-								<td>http://www.baidu.com</td>
-								<td>现金贷款</td>
-								<td>资料简单2000到手</td>
-								<td>http://www.baidu.com</td>
-								<td>2017-05-05</td>
-								<td>上线</td>
-								<td>
-									<a href="backhouse_edit.html?fyID=14458579642011" class="edit">编辑</a>
-									<a href="javascript:del('14458579642011');">下架</a>
-								</td>
-							</tr>
-						
-							<tr>
-								<td><input type="checkbox" name="IDCheck" value="14458579642011" class="acb" /></td>
-								<td>余额宝</td>
-								<td>10000</td>
-								<td>http://www.baidu.com</td>
-								<td>现金白卡</td>
-								<td>说到就到现金极速贷款</td>
-								<td>http://www.baidu.com</td>
-								<td>2017-05-06</td>
-								<td>下架</td>
-								<td>
-									<a href="backhouse_edit.html?fyID=14458579642011" class="edit">编辑</a>
-									<a href="javascript:del('14458579642011');">上线</a>
-								</td>
-							</tr>
-						
-							<tr>
-								<td><input type="checkbox" name="IDCheck" value="14458579642011" class="acb" /></td>
-								<td>借贷宝</td>
-								<td>5000</td>
-								<td>http://www.baidu.com</td>
-								<td>现金贷款</td>
-								<td>资料简单2000到手</td>
-								<td>http://www.baidu.com</td>
-								<td>2017-05-05</td>
-								<td>上线</td>
-								<td>
-									<a href="backhouse_edit.html?fyID=14458579642011" class="edit">编辑</a>
-									<a href="javascript:del('14458579642011');">下架</a>
-								</td>
-							</tr>
-						
-							<tr>
-								<td><input type="checkbox" name="IDCheck" value="14458579642011" class="acb" /></td>
-								<td>余额宝</td>
-								<td>10000</td>
-								<td>http://www.baidu.com</td>
-								<td>现金白卡</td>
-								<td>说到就到现金极速贷款</td>
-								<td>http://www.baidu.com</td>
-								<td>2017-05-06</td>
-								<td>下架</td>
-								<td>
-									<a href="backhouse_edit.html?fyID=14458579642011" class="edit">编辑</a>
-									<a href="javascript:del('14458579642011');">上线</a>
-								</td>
-							</tr>
-
 							<tr  th:each="product,userStat : ${products}">
-								<td><input type="checkbox" name="IDCheck" value="14458579642011" class="acb" /></td>
-								<td th:text="${product.productName}">余额宝</td>
-								<td th:text="${product.productName}">10000</td>
-								<td th:text="${product.productName}">http://www.baidu.com</td>
-								<td th:text="${product.topic}">现金白卡</td>
-								<td th:text="${product.message}">说到就到现金极速贷款</td>
-								<td th:text="${product.productUrl}">http://www.baidu.com</td>
-								<td th:text="${product.createdAt}">2017-05-06</td>
-								<td th:text="${product.isDelete}">下架</td>
+								<!--<td><input type="checkbox" name="IDCheck" value="14458579642011" class="acb" /></td>-->
+								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.productName}">余额宝</td>
+								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.productName}">10000</td>
+								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.imgUrl}">http://www.baidu.com</td>
+								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.topic}">现金白卡</td>
+								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.message}">说到就到现金极速贷款</td>
+								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.productUrl}">http://www.baidu.com</td>
+								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${#dates.format(product.createdAt, 'yyyy-MM-dd')}">2017-05-06</td>
+								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.isDelete}">下架</td>
 								<td>
-									<a href="/back-record-edit.html" class="edit">编辑</a>
+									<a th:href="@{/back-record-edit.html(proId=${product.id})}" class="edit">编辑</a>
 									<a href="javascript:del('14458579642011');">上线</a>
 								</td>
 

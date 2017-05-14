@@ -14,4 +14,10 @@ public interface ProductMapper {
     List<Product> getProductByPage(int count, int offset);
 
     int getAllProductCount();
+
+    int addProduct(Product product);
+
+    int modifyProduct(Product product);
+
+    Product getProductById(long id);
 }

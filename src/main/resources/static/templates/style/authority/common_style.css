@@ -43,6 +43,7 @@ a:hover {
 	margin: 0;
 	position: relative;
 	margin: 0 auto;
+	table-layout:fixed;word-break:break-all;
 }
 
 .table tbody tr th {

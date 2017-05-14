@@ -29,20 +29,7 @@
 			document.getElementById("yue_fen").innerHTML =  myYear + "." + myMonth;
 			document.getElementById("day_day").innerHTML =  myYear + "." + myMonth + "." + myDay;
 		}
-		
-		/**加入收藏夹**/
-		function addfavorite(){
-			var ua = navigator.userAgent.toLowerCase();
-			 if (ua.indexOf("360se") > -1){
-			  	art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'由于360浏览器功能限制，加入收藏夹功能失效', ok:true,});
-			 }else if (ua.indexOf("msie 8") > -1){
-			  	window.external.AddToFavoritesBar('/authority/loginInit.action','西宁市公共租赁住房信息管理系统管理');//IE8
-			 }else if (document.all){
-			  	window.external.addFavorite('/authority/loginInit.action','西宁市公共租赁住房信息管理系统管理');
-			 }else{
-			  	art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'添加失败，请用ctrl+D进行添加', ok:true,});
-			 }
-		} 
+
 	</script>
 	<script type="text/javascript">
 		/* zTree插件加载目录的处理  */
@@ -72,71 +59,6 @@
 				}
 		};
 		 
-		var curExpandNode = null;
-		function beforeExpand(treeId, treeNode) {
-			var pNode = curExpandNode ? curExpandNode.getParentNode():null;
-			var treeNodeP = treeNode.parentTId ? treeNode.getParentNode():null;
-			for(var i=0, l=!treeNodeP ? 0:treeNodeP.children.length; i<l; i++ ) {
-				if (treeNode !== treeNodeP.children[i]) {
-					zTree.expandNode(treeNodeP.children[i], false);
-				}
-			}
-			while (pNode) {
-				if (pNode === treeNode) {
-					break;
-				}
-				pNode = pNode.getParentNode();
-			}
-			if (!pNode) {
-				singlePath(treeNode);
-			}
-	
-		}
-		function singlePath(newNode) {
-			if (newNode === curExpandNode) return;
-			if (curExpandNode && curExpandNode.open==true) {
-				if (newNode.parentTId === curExpandNode.parentTId) {
-					zTree.expandNode(curExpandNode, false);
-				} else {
-					var newParents = [];
-					while (newNode) {
-						newNode = newNode.getParentNode();
-						if (newNode === curExpandNode) {
-							newParents = null;
-							break;
-						} else if (newNode) {
-							newParents.push(newNode);
-						}
-					}
-					if (newParents!=null) {
-						var oldNode = curExpandNode;
-						var oldParents = [];
-						while (oldNode) {
-							oldNode = oldNode.getParentNode();
-							if (oldNode) {
-								oldParents.push(oldNode);
-							}
-						}
-						if (newParents.length>0) {
-							for (var i = Math.min(newParents.length, oldParents.length)-1; i>=0; i--) {
-								if (newParents[i] !== oldParents[i]) {
-									zTree.expandNode(oldParents[i], false);
-									break;
-								}
-							}
-						}else {
-							zTree.expandNode(oldParents[oldParents.length-1], false);
-						}
-					}
-				}
-			}
-			curExpandNode = newNode;
-		}
-	
-		function onExpand(event, treeId, treeNode) {
-			curExpandNode = treeNode;
-		}
-		
 		/** 用于捕获节点被点击的事件回调函数  **/
 		function zTreeOnClick(event, treeId, treeNode) {
 			var zTree = $.fn.zTree.getZTreeObj("dleft_tab1");
@@ -173,15 +95,7 @@
 				$(document).ajaxStart(onStart).ajaxSuccess(onStop);
 				// 异步加载"业务模块"下的菜单
 			  	loadMenu('YEWUMOKUAI', 'dleft_tab1');
-			}else  if('left_tab2' == tabid){
-				$(document).ajaxStart(onStart).ajaxSuccess(onStop);
-				// 异步加载"系统管理"下的菜单
-				loadMenu('XITONGMOKUAI', 'dleft_tab1');
-			}else  if('left_tab3' == tabid){
-				$(document).ajaxStart(onStart).ajaxSuccess(onStop);
-				// 异步加载"其他"下的菜单
-				loadMenu('QITAMOKUAI', 'dleft_tab1');
-			} 
+			}
 		}
 		
 		
@@ -197,24 +111,6 @@
 		});
 		
 		function loadMenu(resourceType, treeObj){
-			/*$.ajax({
-				type:"POST",
-				url:"${dynamicURL}/authority/modelPart.action?resourceType=" + resourceType,
-				dataType : "json",
-				success:function(data){
-					// 如果返回数据不为空，加载"业务模块"目录
-					if(data != null){
-						// 将返回的数据赋给zTree
-						$.fn.zTree.init($("#"+treeObj), setting, data);
- 						alert(treeObj);
-						zTree = $.fn.zTree.getZTreeObj(treeObj);
-						if( zTree ){
-							// 默认展开所有节点
-							zTree.expandAll(true);
-						}
-					}
-				}
-			});*/
             data = [
             {"accessPath":"/back-record-list.html?pageNo=1","checked":false,"delFlag":0,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":3,"resourceID":7,"resourceName":"流量查看","resourceOrder":0,"resourceType":""},
             {"accessPath":"/back-record-add.html","checked":false,"delFlag":0,"parentID":3,"resourceCode":"","resourceDesc":"","resourceGrade":3,"resourceID":8,"resourceName":"产品添加","resourceOrder":0,"resourceType":""},

@@ -17,6 +17,7 @@
 		 * 提交
 		 */
 		$("#submitbutton").click(function() {
+			$("#submitbutton").attr('disabled', 'disabled');
 			if(validateForm()){
 				checkFyFhSubmit();
 			}
@@ -71,7 +72,7 @@
 	/** 检测房源房号是否存在并提交form  **/
 	function checkFyFhSubmit(){
 
-		$("#submitForm").attr("action", "/add-product.html").submit();
+		$("#submitForm").submit();
 	}
 	
 	/** 表单验证  **/
@@ -102,7 +103,7 @@
 </script>
 </head>
 <body>
-<form id="submitForm" name="submitForm" action="/add-product.html" method="POST">
+<form id="submitForm" name="submitForm" action="/add-product.html" method="POST" enctype="multipart/form-data">
 	<input type="hidden" name="fyID" value="14458625716623" id="fyID"/>
 	<div id="container">
 		<div id="nav_links">
@@ -118,31 +119,31 @@
 				<tr>
 					<td class="ui_text_rt" width="80">产品</td>
 					<td class="ui_text_lt">
-						<input type="text" id="fyZldz1" name="productName" value="借贷宝" class="ui_input_txt02"/>
+						<input type="text" id="fyZldz1" maxlength="10" name="productName" value="" class="ui_input_txt02"/>
 					</td>
 				</tr>
 				<tr>
 					<td class="ui_text_rt">图片链接</td>
 					<td class="ui_text_lt">
-						<input type="file" id="fyZldz2" name="imgUrl"  class="ui_input_txt02"/>
+						<input type="file" id="fyZldz2" maxlength="254" name="imgUrl"  class="ui_input_txt02"/>
 					</td>
 				</tr>
 				<tr>
 					<td class="ui_text_rt">标题</td>
 					<td class="ui_text_lt">
-						<input type="text" id="fyZldz3" name="topic" value="瑞景河畔16号楼1-112" class="ui_input_txt02"/>
+						<input type="text" id="fyZldz3" maxlength="5" name="topic" value="" class="ui_input_txt02"/>
 					</td>
 				</tr>
 				<tr>
 					<td class="ui_text_rt">内容</td>
 					<td class="ui_text_lt">
-						<input type="text" id="fyZldz4" name="message" value="瑞景河畔16号楼1-112" class="ui_input_txt02"/>
+						<input type="text" id="fyZldz4" maxlength="10" name="message" value="" class="ui_input_txt02"/>
 					</td>
 				</tr>
 				<tr>
 					<td class="ui_text_rt">链接地址</td>
 					<td class="ui_text_lt">
-						<input type="text" id="fyZldz5" name="productUrl" value="瑞景河畔16号楼1-112" class="ui_input_txt02"/>
+						<input type="text" id="fyZldz5" maxlength="254" name="productUrl" value="" class="ui_input_txt02"/>
 					</td>
 				</tr>
 				

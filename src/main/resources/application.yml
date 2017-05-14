@@ -3,7 +3,7 @@ server:
 
 jdbc_test:
   driverClass: com.mysql.jdbc.Driver
-  JdbcUrl: jdbc:mysql://112.74.78.70:3306/web
+  JdbcUrl: jdbc:mysql://112.74.78.70:3306/web?autoReconnect=true&useUnicode=true&characterEncoding=utf-8
   User: root
   Password: Yzw18873219570
 
