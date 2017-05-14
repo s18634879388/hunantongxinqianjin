@@ -16,6 +16,7 @@ public class Product implements Serializable {
     private int isDelete;   //是否删除
     private Date createdAt; //创建时间
     private Date updatedAt; //修改时间
+    private int clickNum;//日流量
 
     public Long getId() {
         return id;
@@ -87,5 +88,13 @@ public class Product implements Serializable {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public int getClickNum() {
+        return clickNum;
+    }
+
+    public void setClickNum(int clickNum) {
+        this.clickNum = clickNum;
     }
 }

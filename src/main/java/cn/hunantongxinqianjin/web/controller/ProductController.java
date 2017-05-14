@@ -2,6 +2,7 @@ package cn.hunantongxinqianjin.web.controller;
 
 import cn.hunantongxinqianjin.web.entity.Product;
 import cn.hunantongxinqianjin.web.service.ProductService;
+import cn.hunantongxinqianjin.web.service.RecordService;
 import cn.hunantongxinqianjin.web.utils.PageRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +21,8 @@ import java.util.List;
 public class ProductController {
     @Autowired
     ProductService productService;
-
+    @Autowired
+    RecordService recordService;
 
     @RequestMapping(value = "/home.html",method = RequestMethod.GET)
     public String freeMarkerDemo(Model model){
@@ -47,6 +49,11 @@ public class ProductController {
         int count = productService.getAllProductCount();
         int pageCount = (count+pageRequest.getPageSize()-1)/pageRequest.getPageSize();
         List<Product> products = productService.getFirstProducts(pageRequest);
+        for (Product p:products
+             ) {
+            int clickNum = recordService.getCountByPro(p.getId());
+            p.setClickNum(clickNum);
+        }
         model.addAttribute("pageCount",pageCount);
         model.addAttribute("products",products);
         model.addAttribute("pageNo",pageRequest.getPageNo());

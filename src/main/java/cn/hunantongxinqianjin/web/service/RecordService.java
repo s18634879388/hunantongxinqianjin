@@ -24,4 +24,8 @@ public class RecordService {
         }
         return res;
     }
+
+    public int getCountByPro(Long id) {
+        return 1;
+    }
 }
