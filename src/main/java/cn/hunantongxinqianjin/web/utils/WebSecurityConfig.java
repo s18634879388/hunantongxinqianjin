@@ -33,7 +33,7 @@ public class WebSecurityConfig extends WebMvcConfigurerAdapter {
         addInterceptor.excludePathPatterns("/error");
         addInterceptor.excludePathPatterns("/back-login**");
         addInterceptor.excludePathPatterns("/back-home-go**");
-//        addInterceptor.excludePathPatterns("/back-home**");
+        addInterceptor.excludePathPatterns("/home**");
         // 拦截配置
 //        addInterceptor.addPathPatterns("/**");
     }

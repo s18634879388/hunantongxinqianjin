@@ -2,6 +2,7 @@ package cn.hunantongxinqianjin.web.conf;
 
 import cn.hunantongxinqianjin.web.mapper.ProductMapper;
 import cn.hunantongxinqianjin.web.mapper.RecordMapper;
+import cn.hunantongxinqianjin.web.mapper.UserInfoMapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -66,6 +67,9 @@ public class MyMybatisConfig {
 
     @Bean
     public RecordMapper recordMapper(){return sqlSessionTemplate.getMapper(RecordMapper.class);}
+
+    @Bean
+    public UserInfoMapper userInfoMapper(){return sqlSessionTemplate.getMapper(UserInfoMapper.class);}
 
 
 }

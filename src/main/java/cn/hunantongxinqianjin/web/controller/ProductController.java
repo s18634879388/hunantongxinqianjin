@@ -1,8 +1,11 @@
 package cn.hunantongxinqianjin.web.controller;
 
 import cn.hunantongxinqianjin.web.entity.Product;
+import cn.hunantongxinqianjin.web.entity.UserInfo;
 import cn.hunantongxinqianjin.web.service.ProductService;
 import cn.hunantongxinqianjin.web.service.RecordService;
+import cn.hunantongxinqianjin.web.service.UserInfoService;
+import cn.hunantongxinqianjin.web.utils.Md5Utils;
 import cn.hunantongxinqianjin.web.utils.PageRequest;
 import cn.hunantongxinqianjin.web.utils.WebSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +29,10 @@ public class ProductController {
     ProductService productService;
     @Autowired
     RecordService recordService;
+    @Autowired
+    UserInfoService userInfoService;
 
-    @RequestMapping(value = "/home.html",method = RequestMethod.GET)
+    @RequestMapping(value = "/home",method = RequestMethod.GET)
     public String freeMarkerDemo(Model model){
         List<Product> products = productService.getAllProducts();
         model.addAttribute("list1",products);
@@ -72,8 +77,14 @@ public class ProductController {
     }
     @RequestMapping(value = "/back-home-go.html",method = RequestMethod.POST)
     public String backHomeGo(Model model, @RequestParam(value = "userName")String userName, @RequestParam(value = "password")String password, HttpSession session){
-        session.setAttribute(WebSecurityConfig.SESSION_KEY,userName);
-        return "backindex";
+        String md5Pass = Md5Utils.md5(password);
+        UserInfo userInfo =  userInfoService.getUserByPasswordAndName(userName,md5Pass);
+        if (userInfo==null){
+            return "backlogin";
+        }else {
+            session.setAttribute(WebSecurityConfig.SESSION_KEY,userName);
+            return "backindex";
+        }
     }
     @RequestMapping(value = "/back-home.html",method = RequestMethod.GET)
     public String backHome2(Model model){

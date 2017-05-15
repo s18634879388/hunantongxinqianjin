@@ -34,7 +34,7 @@
 <body>
 <div class="mainContent">
     <div class="title">
-        <p><span style="display:inline-block; margin-right:0.2rem;">贷款大全 | 小额贷款</span><span class="date" style="font-size:0.14rem;">${proUpdate?string('yyyy-MM-dd')}</span><span class="date" style="font-size:0.14rem;">更新</span></p>
+        <p><img src="/templates/img/05.png">  <span style="display:inline-block; margin-right:0.2rem;">贷款大全 | 小额贷款</span><span class="date" style="font-size:0.14rem;">${proUpdate?string('yyyy-MM-dd')}</span><span class="date" style="font-size:0.14rem;">更新</span></p>
     </div>
     <div class="content clearfix">
         <#--<div class="content_item">-->

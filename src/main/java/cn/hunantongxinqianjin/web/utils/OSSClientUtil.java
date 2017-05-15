@@ -23,10 +23,10 @@ public class OSSClientUtil {
     // endpoint以杭州为例，其它region请按实际情况填写
     private String endpoint = "http://oss-cn-shanghai.aliyuncs.com";
     // accessKey
-    private String accessKeyId = "LTAIHa82jC6JlqxW";
-    private String accessKeySecret = "VmpsALvjFVCow7JGU5jghAQ5S46Rci";
+    private String accessKeyId = "LTAIIE0s1YxJfB3f";
+    private String accessKeySecret = "Wl6tp89S6ryAnwGmiNUP3bSia9iiZ1";
     //空间
-    private String bucketName = "sxqtest";
+    private String bucketName = "yzwtest";
     //文件存储目录
     private String filedir = "data/";
 

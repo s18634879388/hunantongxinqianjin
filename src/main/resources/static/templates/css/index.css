@@ -24,6 +24,8 @@ body {
 }
 .content_item img {
 	width: 0.8rem;
+	height: 0.8rem;
+	display:inline-block;
 }
 .content_item p {
 	font-size: 0.22rem;
@@ -32,7 +34,9 @@ body {
 	overflow: hidden;	
 }
 .content_item h6 {
-	font-size: 0.26rem;
+	font-size: 0.23rem;
+	height:0.32rem;
+	overflow:hidden;
 }
 .item_title {
 	font-size: 14px;
