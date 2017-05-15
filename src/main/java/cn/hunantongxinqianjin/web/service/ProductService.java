@@ -61,4 +61,13 @@ public class ProductService {
     public Product getProductById(long id) {
         return productMapper.getProductById(id);
     }
+
+    public int modifyProState(long id) {
+        synchronized (this){
+            Product product = productMapper.getProductById(id);
+            int state = product.getIsDelete()==0 ? 1 : 0;
+            int res =  productMapper.modifyProState(state,id);
+            return res;
+        }
+    }
 }

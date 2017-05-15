@@ -17,12 +17,12 @@
     </resultMap>
 
     <select id="getAllProducts" resultMap="productMap">
-        SELECT * FROM product where is_delete=0
+        SELECT * FROM product where is_delete=0 order by updated_at desc
 
     </select>
 
     <select id="getProductByPage" resultMap="productMap">
-        SELECT * FROM product where is_delete=0 order by created_at limit #{1},#{0}
+        SELECT * FROM product  order by created_at limit #{1},#{0}
     </select>
 
     <select id="getAllProductCount" resultType="java.lang.Integer">
@@ -57,6 +57,10 @@
     <select id="getProductById" resultMap="productMap">
         SELECT * FROM product where id=#{0}
     </select>
+
+    <update id="modifyProState">
+        UPDATE product SET is_delete=#{0} where id=#{1}
+    </update>
 
 </mapper>
 

@@ -13,7 +13,9 @@ mybatis:
   configLocation: classpath:/mybatis-config.xml
 spring:
   thymeleaf:
-    prefix: classpath:/templates/
+    prefix: classpath:/static/templates/
     suffix: .html
     cache: false
     mode: LEGACYHTML5
+  freemarker:
+    template-loader-path: classpath:/static/templates/

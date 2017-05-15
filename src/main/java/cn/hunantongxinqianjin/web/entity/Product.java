@@ -21,6 +21,7 @@ public class Product implements Serializable {
     private int clickNumOfMonth;//一月内流量
     private int clickNumYear;//年流量
     private int clickNumAll;//所有流量
+    private String state;
 
     public Long getId() {
         return id;
@@ -132,5 +133,17 @@ public class Product implements Serializable {
 
     public void setClickNumAll(int clickNumAll) {
         this.clickNumAll = clickNumAll;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        if (this.isDelete==0){
+            this.state = "已下架";
+        }else {
+            this.state = "已上线";
+        }
     }
 }

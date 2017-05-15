@@ -4,6 +4,7 @@ import cn.hunantongxinqianjin.web.entity.Product;
 import cn.hunantongxinqianjin.web.service.ProductService;
 import cn.hunantongxinqianjin.web.service.RecordService;
 import cn.hunantongxinqianjin.web.utils.PageRequest;
+import cn.hunantongxinqianjin.web.utils.WebSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -28,6 +31,7 @@ public class ProductController {
     public String freeMarkerDemo(Model model){
         List<Product> products = productService.getAllProducts();
         model.addAttribute("list1",products);
+        model.addAttribute("proUpdate",products.get(0).getUpdatedAt());
         return "index";
     }
 
@@ -37,7 +41,8 @@ public class ProductController {
         Product product = productService.getProductById(Long.parseLong(id));
         model.addAttribute("proMod",product);
         return "backhouse_edit";
-    }@RequestMapping(value = "/back-record-add.html",method = RequestMethod.GET)
+    }
+    @RequestMapping(value = "/back-record-add.html",method = RequestMethod.GET)
     public String backRecordAdd(Model model){
         return "backhouse_add";
     }
@@ -60,17 +65,14 @@ public class ProductController {
         model.addAttribute("recordCount",count);
         return "backhouse_list";
     }
-    @RequestMapping(value = "/back-record-produce.html",method = RequestMethod.GET)
-    public String backRecordProduce(Model model){
-        return "backintroduce";
-    }
 
-        @RequestMapping(value = "/back-login.html",method = RequestMethod.GET)
+    @RequestMapping(value = "/back-login.html",method = RequestMethod.GET)
     public String backLogin(Model model){
         return "backlogin";
     }
-    @RequestMapping(value = "/back-home.html",method = RequestMethod.POST)
-    public String backHome(Model model){
+    @RequestMapping(value = "/back-home-go.html",method = RequestMethod.POST)
+    public String backHomeGo(Model model, @RequestParam(value = "userName")String userName, @RequestParam(value = "password")String password, HttpSession session){
+        session.setAttribute(WebSecurityConfig.SESSION_KEY,userName);
         return "backindex";
     }
     @RequestMapping(value = "/back-home.html",method = RequestMethod.GET)
@@ -156,6 +158,12 @@ public class ProductController {
         model.addAttribute("pageNo",pageRequest.getPageNo());
         model.addAttribute("recordCount",count);
         return "backpronum_list";
+    }
+
+    @RequestMapping(value = "/modify-pro-state.html",method = RequestMethod.GET)
+    public String modifyProState(@RequestParam(value = "pageNo")String pageNo,@RequestParam(value = "proId")String proId){
+        int res = productService.modifyProState(Long.parseLong(proId));
+        return "forward:/back-record-list.html?pageNo";
     }
 
 

@@ -20,4 +20,6 @@ public interface ProductMapper {
     int modifyProduct(Product product);
 
     Product getProductById(long id);
+
+    int modifyProState(int state,Long id);
 }
