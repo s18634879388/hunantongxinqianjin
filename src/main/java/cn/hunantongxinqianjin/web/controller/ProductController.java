@@ -37,7 +37,7 @@ public class ProductController {
         List<Product> products = productService.getAllProducts();
         model.addAttribute("list1",products);
         model.addAttribute("proUpdate",products.get(0).getUpdatedAt());
-        return "index";
+        return "home2";
     }
 
     @RequestMapping(value = "/back-record-edit.html",method = RequestMethod.GET)
@@ -57,7 +57,7 @@ public class ProductController {
         System.out.println(pageNo+"...........");
         PageRequest pageRequest = new PageRequest(10,Integer.parseInt(pageNo),0,true);
         int count = productService.getAllProductCount();
-        int pageCount = (count+pageRequest.getPageSize()-1)/pageRequest.getPageSize();
+        int pageCount = count % 10 == 0 ? count/10 : (count/10) +1;
         List<Product> products = productService.getFirstProducts(pageRequest);
         for (Product p:products
              ) {
