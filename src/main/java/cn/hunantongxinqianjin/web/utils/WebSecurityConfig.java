@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Created by Administrator on 2017/5/15.
+ * 登录拦截器
  */
 @Configuration
 public class WebSecurityConfig extends WebMvcConfigurerAdapter {

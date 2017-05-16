@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * 点击记录实体类
  * Created by shixiaoqi on 2017/5/13.
  */
 public class Record implements Serializable {

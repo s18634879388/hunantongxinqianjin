@@ -14,6 +14,10 @@ public class UserInfoService {
     @Autowired
     UserInfoMapper userInfoMapper;
 
+    /**
+     * 根据用户名和密码查询用户是否存在
+     * @return
+     */
     public UserInfo getUserByPasswordAndName(String userName, String password) {
         return userInfoMapper.getUserByPasswordAndName(userName,password);
     }

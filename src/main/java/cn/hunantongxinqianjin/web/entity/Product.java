@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * 产品实体类
  * Created by shixiaoqi on 2017/5/13.
  */
 public class Product implements Serializable {

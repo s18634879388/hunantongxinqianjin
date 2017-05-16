@@ -6,7 +6,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
-
+/**
+ * MD5加密
+ */
 public class Md5Utils {
 	
 

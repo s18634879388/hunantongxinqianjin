@@ -16,6 +16,7 @@ import java.util.Random;
 
 /**
  * Created by shixiaoqi on 2017/5/14.
+ * 阿里云 OOS工具类
  */
 @Component
 public class OSSClientUtil {

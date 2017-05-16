@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 /**
  *
  * @author Administrator
+ * 获取ip
  */
 public class RequestUtils {
 

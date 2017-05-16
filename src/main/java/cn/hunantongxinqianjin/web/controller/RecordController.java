@@ -20,6 +20,12 @@ public class RecordController {
     @Autowired
     RecordService recordService;
 
+    /**
+     * 用户点击后记录（每个ip每日每个产品点击多次只记录一次）
+     * @param id
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/addRecord",method = RequestMethod.POST)
     @ResponseBody
     public String addRecord(@RequestParam(value = "id")String id, HttpServletRequest request){

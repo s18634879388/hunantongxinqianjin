@@ -22,6 +22,7 @@ import java.util.List;
 
 /**
  * Created by shixiaoqi on 2017/5/13.
+ * 产品控制器类
  */
 @Controller
 public class ProductController {
@@ -32,6 +33,11 @@ public class ProductController {
     @Autowired
     UserInfoService userInfoService;
 
+    /**
+     *  前台客户端展示   获取所有上架的产品信息
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/home",method = RequestMethod.GET)
     public String freeMarkerDemo(Model model){
         List<Product> products = productService.getAllProducts();
@@ -40,6 +46,12 @@ public class ProductController {
         return "home2";
     }
 
+    /**
+     * 后台修改产品信息用于数据反显接口
+     * @param model
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/back-record-edit.html",method = RequestMethod.GET)
     public String backRecordEdit(Model model,@RequestParam(value = "proId") String id){
         //查询
@@ -47,14 +59,26 @@ public class ProductController {
         model.addAttribute("proMod",product);
         return "backhouse_edit";
     }
+
+    /**
+     * 跳转修改产品页
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/back-record-add.html",method = RequestMethod.GET)
     public String backRecordAdd(Model model){
         return "backhouse_add";
     }
+
+    /**
+     * 后台产品列表（分页显示） 获取所有的产品信息
+     * @param model
+     * @param pageNo
+     * @return
+     */
     @RequestMapping(value = "/back-record-list.html",method = RequestMethod.GET)
     public String backRecordList(Model model,@RequestParam(value = "pageNo") String pageNo){
         //
-        System.out.println(pageNo+"...........");
         PageRequest pageRequest = new PageRequest(10,Integer.parseInt(pageNo),0,true);
         int count = productService.getAllProductCount();
         int pageCount = count % 10 == 0 ? count/10 : (count/10) +1;
@@ -71,10 +95,25 @@ public class ProductController {
         return "backhouse_list";
     }
 
+    /**
+     * 跳转登录页
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/back-login.html",method = RequestMethod.GET)
-    public String backLogin(Model model){
+    public String backLogin(Model model,HttpSession session){
+        session.removeAttribute(WebSecurityConfig.SESSION_KEY);
         return "backlogin";
     }
+
+    /**
+     * 登录功能   跳转首页
+     * @param model
+     * @param userName
+     * @param password
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/back-home-go.html",method = RequestMethod.POST)
     public String backHomeGo(Model model, @RequestParam(value = "userName")String userName, @RequestParam(value = "password")String password, HttpSession session){
         String md5Pass = Md5Utils.md5(password);
@@ -86,11 +125,28 @@ public class ProductController {
             return "backindex";
         }
     }
-    @RequestMapping(value = "/back-home.html",method = RequestMethod.GET)
-    public String backHome2(Model model){
-        return "backindex";
-    }
 
+    /**
+     *
+     * @param model
+     * @return
+     */
+//    @RequestMapping(value = "/back-home.html",method = RequestMethod.GET)
+//    public String backHome2(Model model){
+//        return "backindex";
+//    }
+
+    /**
+     * 添加产品   功能实现
+     * @param topic
+     * @param message
+     * @param productName
+     * @param file
+     * @param productUrl
+     * @param model
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/add-product.html",method = RequestMethod.POST)
     @ResponseBody
     public String addProduct(@RequestParam(value = "topic")String topic,@RequestParam(value = "message")String message,
@@ -99,12 +155,10 @@ public class ProductController {
         String imgUrl = null;
         try {
             imgUrl = productService.updateHead(file);//此处是调用上传服务接口，4是需要更新的userId 测试数据。
-            System.out.println("yes++++++++++"+imgUrl);
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("图片上传失败");
         }
-        System.out.println(topic+"======"+message+"======"+productName+"======"+"======"+productUrl);
         Product product = new Product();
         product.setImgUrl(imgUrl);
         product.setMessage(message);
@@ -116,6 +170,19 @@ public class ProductController {
         model.addAttribute("addMessage","添加成功");
         return "操作成功";
     }
+
+    /**
+     * 后台修改产品信息  真实修改操作
+     * @param topic
+     * @param message
+     * @param productName
+     * @param file
+     * @param productUrl
+     * @param id
+     * @param model
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/modify-product.html",method = RequestMethod.POST)
     @ResponseBody
     public String modifyProduct(@RequestParam(value = "topic")String topic,@RequestParam(value = "message")String message,
@@ -135,7 +202,6 @@ public class ProductController {
                 imgUrl = productService.updateHead(file);//此处是调用上传服务接口，4是需要更新的userId 测试数据。
                 product.setImgUrl(imgUrl);
                 int res = productService.modifyProduct(product);
-                System.out.println("yes++++++++++"+imgUrl);
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new Exception("图片上传失败");
@@ -144,6 +210,12 @@ public class ProductController {
         return "修改成功";
     }
 
+    /**
+     * 流量统计  （分页实现）
+     * @param model
+     * @param pageNo
+     * @return
+     */
     @RequestMapping(value = "/back-product-num.html",method = RequestMethod.GET)
     public String backProNumList(Model model,@RequestParam(value = "pageNo") String pageNo){
         PageRequest pageRequest = new PageRequest(10,Integer.parseInt(pageNo),0,true);
@@ -171,6 +243,12 @@ public class ProductController {
         return "backpronum_list";
     }
 
+    /**
+     * 修改产品上下架状态
+     * @param pageNo
+     * @param proId
+     * @return
+     */
     @RequestMapping(value = "/modify-pro-state.html",method = RequestMethod.GET)
     public String modifyProState(@RequestParam(value = "pageNo")String pageNo,@RequestParam(value = "proId")String proId){
         int res = productService.modifyProState(Long.parseLong(proId));
