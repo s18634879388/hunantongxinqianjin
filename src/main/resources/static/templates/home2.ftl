@@ -46,7 +46,7 @@
 
 <body>
 <div class="container">
-    <header> <img src="/templates/img/sudaizhijia2x.png" alt=""> <span>贷款大全 | 小额贷款 <em>${proUpdate?string('yyyy-MM-dd')} 更新</em></span></header>
+    <header> <img src="/templates/img/sudaizhijia2x.png" alt=""> <span>贷款大全 | 速贷钱进 <em>${proUpdate?string('yyyy-MM-dd')} 更新</em></span></header>
     <section>
         <div class="centent">
 
