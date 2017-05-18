@@ -151,7 +151,7 @@ public class ProductController {
     @ResponseBody
     public String addProduct(@RequestParam(value = "topic")String topic,@RequestParam(value = "message")String message,
                              @RequestParam(value = "productName")String productName,@RequestParam(value = "imgUrl")MultipartFile file,
-                             @RequestParam(value = "productUrl")String productUrl,Model model) throws Exception {
+                             @RequestParam(value = "productUrl")String productUrl,@RequestParam(value = "displayOrder")String displayOrder,Model model) throws Exception {
         String imgUrl = null;
         try {
             imgUrl = productService.updateHead(file);//此处是调用上传服务接口，4是需要更新的userId 测试数据。
@@ -165,6 +165,7 @@ public class ProductController {
         product.setTopic(topic);
         product.setProductName(productName);
         product.setProductUrl(productUrl);
+        product.setDisplayOrder(Integer.parseInt(displayOrder));
         //添加
         int res = productService.addProduct(product);
         model.addAttribute("addMessage","添加成功");
@@ -187,13 +188,14 @@ public class ProductController {
     @ResponseBody
     public String modifyProduct(@RequestParam(value = "topic")String topic,@RequestParam(value = "message")String message,
                              @RequestParam(value = "productName")String productName,@RequestParam(value = "imgUrl",required = false)MultipartFile file,
-                             @RequestParam(value = "productUrl")String productUrl,@RequestParam(value = "proId")String id,Model model) throws Exception {
+                             @RequestParam(value = "productUrl")String productUrl,@RequestParam(value = "proId")String id,@RequestParam(value = "displayOrder")String displayOrder,Model model) throws Exception {
         Product product = new Product();
         product.setId(Long.parseLong(id));
         product.setMessage(message);
         product.setTopic(topic);
         product.setProductName(productName);
         product.setProductUrl(productUrl);
+        product.setDisplayOrder(Integer.parseInt(displayOrder));
         if (file==null){
             int res = productService.modifyProduct(product);
         }else {

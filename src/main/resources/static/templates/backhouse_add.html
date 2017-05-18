@@ -98,6 +98,10 @@
 			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写链接地址', ok:true,});
 			return false;
 		}
+		if($("#fyZldz7").val()==""){
+			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写排序字段', ok:true,});
+			return false;
+		}
 		return true;
 	}
 </script>
@@ -144,6 +148,12 @@
 					<td class="ui_text_rt">链接地址</td>
 					<td class="ui_text_lt">
 						<input type="text" id="fyZldz5" maxlength="254" name="productUrl" value="" class="ui_input_txt02"/>
+					</td>
+				</tr>
+				<tr>
+					<td class="ui_text_rt">排序字段</td>
+					<td class="ui_text_lt">
+						<input type="text" id="fyZldz7" maxlength="254" name="displayOrder" value="" class="ui_input_txt02"/>
 					</td>
 				</tr>
 				

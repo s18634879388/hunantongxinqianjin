@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" th:inline="text"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>现金贷</title>
+		<style>
+			*{margin: 0; padding: 0;}
+			.wrap{background: url('../templates/img/bg1.jpg');width: 640px;height: 1136px;margin: 0 auto;}
+			input{width: 406px;height: 70px;background: none;outline: none;padding-top: 10px;  border: none;font-size: 24px;}
+			.tel{margin-top: 110px;margin-left: 170px;padding-left: 20px;}
+			.name{margin-top: 34px;margin-left: 170px;padding-left: 20px;}
+			.btn{margin-top: 55px;margin-left: 103px;width: 435px;height: 86px;cursor: pointer;}
+		    .zi {
+                margin-left:221px;
+                padding-top: 156px;
+                font-size:48px;
+                letter-spacing:10px;
+		    }
+		</style>
+        <script src="/templates/scripts/jquery/jquery-1.4.4.min.js"></script>
+        <script src="/templates/js/name.js"></script>
+        <script src="/templates/js/yanzheng.js"></script>
+        <script src="/templates/js/htmlrem.js"></script>
+	</head>
+	<body>
+		<div class="wrap">
+            <div class="zi">
+            现金贷
+            </div>
+			<input maxlength="11" class="tel" name="" id="" type="tel">
+			<input name="" id="Text1" class="name" type="text">
+			<input class="btn" value="" type="button">
+		</div>
+	
+
+<script type="text/javascript">
+    $('.btn').click(function () {
+        var tel = $('.tel').val(),
+            uname = $('.name').val();
+		var proId = [[${proId}]];
+        if (telYanz(tel) == false || nameYanz(uname) == false) { return; }
+        $.ajax({
+            type: "GET",
+            url: "/addMobileAndUser",
+			data:{phone:tel,userName:uname,proId:proId},
+            async: true,
+            success: function (result) {
+                window.location.href = result;
+            }
+        });
+    })
+</script>
+</body></html>

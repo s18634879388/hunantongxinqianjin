@@ -13,16 +13,16 @@
         <result column="img_url" property="imgUrl"/>
         <result column="created_at" property="createdAt"/>
         <result column="updated_at" property="updatedAt"/>
-
+        <result column="display_order" property="displayOrder"/>
     </resultMap>
 
     <select id="getAllProducts" resultMap="productMap">
-        SELECT * FROM product where is_delete=0 order by updated_at desc
+        SELECT * FROM product where is_delete=0 order by display_order asc,updated_at desc
 
     </select>
 
     <select id="getProductByPage" resultMap="productMap">
-        SELECT * FROM product  order by created_at limit #{1},#{0}
+        SELECT * FROM product  order by display_order asc,created_at limit #{1},#{0}
     </select>
 
     <select id="getAllProductCount" resultType="java.lang.Integer">
@@ -30,7 +30,7 @@
     </select>
 
     <insert id="addProduct">
-        INSERT INTO product(topic,message,is_delete,product_url,product_name,img_url,created_at,updated_at) VALUES (#{topic},#{message},0,#{productUrl},#{productName},#{imgUrl},now(),now())
+        INSERT INTO product(topic,message,is_delete,product_url,product_name,img_url,created_at,updated_at,display_order) VALUES (#{topic},#{message},0,#{productUrl},#{productName},#{imgUrl},now(),now(),#{displayOrder})
     </insert>
 
     <update id="modifyProduct">
@@ -49,6 +49,9 @@
         </if>
         <if test="productUrl!=null">
             product_url=#{productUrl},
+        </if>
+        <if test="displayOrder!=null">
+            display_order=#{displayOrder},
         </if>
         updated_at=now()
         where id = #{id}

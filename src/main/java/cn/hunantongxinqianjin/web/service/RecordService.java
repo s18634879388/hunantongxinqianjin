@@ -2,6 +2,7 @@ package cn.hunantongxinqianjin.web.service;
 
 import cn.hunantongxinqianjin.web.entity.Record;
 import cn.hunantongxinqianjin.web.mapper.RecordMapper;
+import cn.hunantongxinqianjin.web.mapper.UserOpenMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,9 @@ public class RecordService {
 
     @Autowired
     RecordMapper recordMapper;
+
+    @Autowired
+    UserOpenMapper userOpenMapper;
 
     /**
      * 添加用户对产品的点击记录
@@ -80,5 +84,10 @@ public class RecordService {
     public int getclickNumAllByPro(Long id) {
         int count = recordMapper.getCountByPro(id,"all");
         return count;
+    }
+
+    public int addMobileAndUser(String phone, String userName) {
+        int res = userOpenMapper.addMobileAndUser(phone,userName);
+        return res;
     }
 }

@@ -23,6 +23,7 @@ public class Product implements Serializable {
     private int clickNumYear;//年流量
     private int clickNumAll;//所有流量
     private String state;
+    private int displayOrder;
 
     public Long getId() {
         return id;
@@ -146,5 +147,13 @@ public class Product implements Serializable {
         }else {
             this.state = "已上线";
         }
+    }
+
+    public int getDisplayOrder() {
+        return displayOrder;
+    }
+
+    public void setDisplayOrder(int displayOrder) {
+        this.displayOrder = displayOrder;
     }
 }
