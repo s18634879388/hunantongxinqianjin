@@ -1,5 +1,7 @@
 package cn.hunantongxinqianjin.web.entity;
 
+import org.jeecgframework.poi.excel.annotation.Excel;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -8,8 +10,11 @@ import java.util.Date;
  */
 public class UserOpen implements Serializable {
     private Long id;
+    @Excel(name = "用户姓名")
     private String uName;
+    @Excel(name = "电话")
     private String uPhone;
+    @Excel(name = "记录时间",format = "yyyy-MM-dd")
     private Date createdAt;
     private Date updatedAt;
 

@@ -16,6 +16,10 @@
         INSERT INTO user_open(u_name,u_phone,created_at,updated_at) VALUES (#{1},#{0},now(),now())
     </insert>
 
+    <select id="getMobileAndUser" resultMap="userOpenMap">
+        SELECT * from user_open WHERE date(created_at) = date(#{0})
+    </select>
+
 
 
 

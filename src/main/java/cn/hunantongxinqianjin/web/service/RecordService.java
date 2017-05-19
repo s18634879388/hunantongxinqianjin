@@ -1,10 +1,16 @@
 package cn.hunantongxinqianjin.web.service;
 
 import cn.hunantongxinqianjin.web.entity.Record;
+import cn.hunantongxinqianjin.web.entity.UserOpen;
 import cn.hunantongxinqianjin.web.mapper.RecordMapper;
 import cn.hunantongxinqianjin.web.mapper.UserOpenMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by shixiaoqi on 2017/5/13.
@@ -89,5 +95,11 @@ public class RecordService {
     public int addMobileAndUser(String phone, String userName) {
         int res = userOpenMapper.addMobileAndUser(phone,userName);
         return res;
+    }
+
+    public List<UserOpen> getMobileAndUser(String chooseTime) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date cTime =  simpleDateFormat.parse(chooseTime);
+        return userOpenMapper.getMobileAndUser(cTime);
     }
 }
