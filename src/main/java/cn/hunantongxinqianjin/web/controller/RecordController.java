@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -67,24 +69,24 @@ public class RecordController {
     @RequestMapping(value = "/getMobileAndUser",method = RequestMethod.POST)
     @ResponseBody
     public String getMobileAndUser(@RequestParam(value = "chooseTime")String chooseTime,
-                                   @RequestParam(value = "saveName")String saveName
+                                   HttpServletResponse response
                                    ) throws IOException, ParseException {
 
         List<UserOpen> userOpens = recordService.getMobileAndUser(chooseTime);
         if (userOpens==null||userOpens.size()<=0){
             return "当日没有记录,导出失败";
         }
+        Long time = new Date().getTime();
+        response.setHeader("conent-type", "application/octet-stream");
+        response.setContentType("application/octet-stream");
+        response.addHeader("Content-Disposition",
+                "attachment;fileName=" + time+".xls");
+
         ExportParams exportParams = new ExportParams("用户信息记录","用户信息", ExcelType.XSSF);
         Workbook workbook = ExcelExportUtil.exportExcel(exportParams, UserOpen.class,userOpens);
-        String savePath = "C:\\Users\\Administrator\\Documents\\";
-        File file = new File("");
-        if (!file.exists()){
-            file.mkdir();
-        }
-        String filePath = savePath+"\\"+saveName+".xls";
-        FileOutputStream fileOutputStream = new FileOutputStream(filePath);
+        OutputStream fileOutputStream = response.getOutputStream();
         workbook.write(fileOutputStream);
         fileOutputStream.close();
-        return "操作成功,文件已保存在"+filePath;
+        return "操作成功";
     }
 }

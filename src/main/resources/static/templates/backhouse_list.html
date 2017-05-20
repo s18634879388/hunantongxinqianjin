@@ -85,9 +85,10 @@
 						<tr>
 							<!--<th><input type="checkbox" id="all" onclick="selectOrClearAllCheckbox(this);" />-->
 							<!--</th>-->
+							<th >标识</th>
 							<th >排序</th>
 							<th >产品</th>
-							<th >日点击人数</th>
+							<!--<th >日点击人数</th>-->
 							<th >图片</th>
 							<th >标题</th>
 							<th >内容</th>
@@ -99,9 +100,10 @@
 						
 							<tr  th:each="product,userStat : ${products}">
 								<!--<td><input type="checkbox" name="IDCheck" value="14458579642011" class="acb" /></td>-->
+								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.id}">1</td>
 								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.displayOrder}">1</td>
 								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.productName}">余额宝</td>
-								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.clickNum}">10000</td>
+								<!--<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.clickNum}">10000</td>-->
 								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.imgUrl}">http://www.baidu.com</td>
 								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.topic}">现金白卡</td>
 								<td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;" th:text="${product.message}">说到就到现金极速贷款</td>

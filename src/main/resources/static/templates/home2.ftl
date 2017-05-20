@@ -51,7 +51,7 @@
         <div class="centent">
 
         <#list list1 as name>
-            <a href="/to_first.html?id=${name.id}" onclick="myClick(${name.id})">
+            <a href="${name.productUrl}" onclick="myClick(${name.id})">
                 <dl> <dt><img src="${name.imgUrl}" alt="用钱宝" title="用钱宝" class="smallIcon"></dt>
                     <dd>
                         <h3>${name.topic}</h3>

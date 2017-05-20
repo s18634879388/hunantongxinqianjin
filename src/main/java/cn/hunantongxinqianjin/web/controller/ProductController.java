@@ -83,11 +83,11 @@ public class ProductController {
         int count = productService.getAllProductCount();
         int pageCount = count % 10 == 0 ? count/10 : (count/10) +1;
         List<Product> products = productService.getFirstProducts(pageRequest);
-        for (Product p:products
-             ) {
-            int clickNum = recordService.getCountByPro(p.getId());
-            p.setClickNum(clickNum);
-        }
+//        for (Product p:products
+//             ) {
+//            int clickNum = recordService.getCountByPro(p.getId());
+//            p.setClickNum(clickNum);
+//        }
         model.addAttribute("pageCount",pageCount);
         model.addAttribute("products",products);
         model.addAttribute("pageNo",pageRequest.getPageNo());
