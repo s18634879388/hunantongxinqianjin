@@ -46,6 +46,7 @@ public class RecordController {
     @RequestMapping(value = "/addRecord",method = RequestMethod.POST)
     @ResponseBody
     public String addRecord(Model model, @RequestParam(value = "id")String id, HttpServletRequest request){
+        System.out.println("--------------"+id);
         String ip = RequestUtils.getIpAddr(request);
         int res = recordService.addRecord(id,ip);
         model.addAttribute("proId",id);

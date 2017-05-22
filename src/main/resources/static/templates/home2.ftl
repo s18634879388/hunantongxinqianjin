@@ -19,27 +19,40 @@
     <script src="/templates/js/hm.js"></script><script src="/templates/js/hm_002.js"></script><script src="/templates/js/htmlrem.js"></script>
     <link rel="stylesheet" href="/templates/css/reset.css">
     <link rel="stylesheet" href="/templates/css/index.css">
+    <script src="/templates/scripts/jquery/jquery-1.4.4.min.js"></script>
     <script src="/templates/js/zepto.js"></script><script src="/templates/js/index.js"></script></head>
     <script>
         function myClick(id1){
-            var xmlhttp;
-            if (window.XMLHttpRequest)
-            {// code for IE7+, Firefox, Chrome, Opera, Safari
-                xmlhttp=new XMLHttpRequest();
-            }
-            else
-            {// code for IE6, IE5
-                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            xmlhttp.onreadystatechange=function()
-            {
-                if (xmlhttp.readyState==4 && xmlhttp.status==200)
-                {
-                    document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+//            var xmlhttp;
+//            if (window.XMLHttpRequest)
+//            {// code for IE7+, Firefox, Chrome, Opera, Safari
+//                xmlhttp=new XMLHttpRequest();
+//            }
+//            else
+//            {// code for IE6, IE5
+//                xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+//            }
+//            xmlhttp.onreadystatechange=function()
+//            {
+//                if (xmlhttp.readyState==4 && xmlhttp.status==200)
+//                {
+//                    document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+//                }
+//            }
+//            xmlhttp.open("POST","/addRecord?id="+id1,true);
+//            xmlhttp.send();
+
+            var proId = id1;
+            $.ajax({
+                type: "POST",
+                url: "/addRecord",
+                data:{id:proId},
+                async: true,
+                success: function (result) {
+
                 }
-            }
-            xmlhttp.open("POST","/addRecord?id="+id1,true);
-            xmlhttp.send();
+            });
+
         }
     </script>
 
