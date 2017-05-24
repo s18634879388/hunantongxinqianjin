@@ -92,8 +92,8 @@ public class RecordService {
         return count;
     }
 
-    public int addMobileAndUser(String phone, String userName) {
-        int res = userOpenMapper.addMobileAndUser(phone,userName);
+    public int addMobileAndUser(String phone, String userName,Long proId) {
+        int res = userOpenMapper.addMobileAndUser(phone,userName,proId);
         return res;
     }
 

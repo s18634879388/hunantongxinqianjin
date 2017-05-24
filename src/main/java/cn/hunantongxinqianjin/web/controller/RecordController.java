@@ -62,7 +62,7 @@ public class RecordController {
     @ResponseBody
     public String addMobileAndUser(@RequestParam(value = "phone")String phone,@RequestParam(value = "userName")String userName,
                                    @RequestParam(value = "proId")String proId) throws UnsupportedEncodingException {
-        int res = recordService.addMobileAndUser(phone,userName);
+        int res = recordService.addMobileAndUser(phone,userName,Long.parseLong(proId));
         Product product = productService.getProductById(Long.parseLong(proId));
         return product.getProductUrl();
     }

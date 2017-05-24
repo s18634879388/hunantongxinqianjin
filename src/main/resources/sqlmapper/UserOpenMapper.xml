@@ -7,13 +7,14 @@
         <result column="id" property="id"/>
         <result column="u_name" property="uName"/>
         <result column="u_phone" property="uPhone"/>
+        <result column="pro_id" property="proId"/>
         <result column="created_at" property="createdAt"/>
         <result column="updated_at" property="updatedAt"/>
 
     </resultMap>
 
     <insert id="addMobileAndUser">
-        INSERT INTO user_open(u_name,u_phone,created_at,updated_at) VALUES (#{1},#{0},now(),now())
+        INSERT INTO user_open(u_name,u_phone,pro_id,created_at,updated_at) VALUES (#{1},#{0},#{2},now(),now())
     </insert>
 
     <select id="getMobileAndUser" resultMap="userOpenMap">

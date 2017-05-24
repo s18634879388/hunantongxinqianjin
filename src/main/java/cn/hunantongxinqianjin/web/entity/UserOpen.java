@@ -16,6 +16,9 @@ public class UserOpen implements Serializable {
     private String uPhone;
     @Excel(name = "记录时间",format = "yyyy-MM-dd")
     private Date createdAt;
+    @Excel(name = "产品唯一id")
+    private Long proId;
+
     private Date updatedAt;
 
     public Long getId() {
@@ -56,5 +59,13 @@ public class UserOpen implements Serializable {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Long getProId() {
+        return proId;
+    }
+
+    public void setProId(Long proId) {
+        this.proId = proId;
     }
 }
