@@ -60,6 +60,7 @@
 <body>
 <div class="container">
     <header> <img src="/templates/img/sudaizhijia2x.png" alt=""> <span>贷款大全 | 速贷钱进 <em>${proUpdate?string('yyyy-MM-dd')} 更新</em></span></header>
+    <p style="font-size: 0.24rem; color: #fb5b5b; box-sizing: border-box; padding-left: 0.3rem; padding-bottom: 0.14rem; ">提示：同时申请多款产品，可提升成功率和贷款效率</p>
     <section>
         <div class="centent">
 
@@ -75,6 +76,7 @@
 
         </div>
     </section>
+    <p style="font-size: 0.08rem; color: #666; width:100%; margin:0 auto; text-align:center; margin-top:0.16rem; ">©2017&nbsp;湖南同心钱进信息技术有限公司 湘ICP备17009251号</p>
 </div>
 
 
