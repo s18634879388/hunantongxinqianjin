@@ -69,11 +69,11 @@ public class RecordController {
 
     @RequestMapping(value = "/getMobileAndUser",method = RequestMethod.POST)
     @ResponseBody
-    public String getMobileAndUser(@RequestParam(value = "chooseTime")String chooseTime,
+    public String getMobileAndUser(@RequestParam(value = "chooseTime")String chooseTime,@RequestParam(value = "proId")String proId,
                                    HttpServletResponse response
                                    ) throws IOException, ParseException {
 
-        List<UserOpen> userOpens = recordService.getMobileAndUser(chooseTime);
+        List<UserOpen> userOpens = recordService.getMobileAndUser(chooseTime,Long.parseLong(proId));
         if (userOpens==null||userOpens.size()<=0){
             return "当日没有记录,导出失败";
         }

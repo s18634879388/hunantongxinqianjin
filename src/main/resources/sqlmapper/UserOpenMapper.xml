@@ -18,7 +18,7 @@
     </insert>
 
     <select id="getMobileAndUser" resultMap="userOpenMap">
-        SELECT * from user_open WHERE date(created_at) = date(#{0})
+        SELECT * from user_open WHERE date(created_at) = date(#{0}) and pro_id=#{1}
     </select>
 
 

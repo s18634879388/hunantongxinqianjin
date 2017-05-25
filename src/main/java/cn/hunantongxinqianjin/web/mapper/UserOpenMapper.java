@@ -11,5 +11,5 @@ import java.util.List;
 public interface UserOpenMapper {
     int addMobileAndUser(String phone, String userName,Long proId);
 
-    List<UserOpen> getMobileAndUser(Date cTime);
+    List<UserOpen> getMobileAndUser(Date cTime,Long proId);
 }

@@ -40,36 +40,7 @@
 		}
 	});
 	
-	/** 检测房源房号是否存在  **/
-	function checkFyFh(){
-		// 分别获取小区编号、栋号、层号、房号
-		var fyID = $('#fyID').val();
-		var fyXqCode = $("#fyXq").val();
-		var fyDh = $("#fyDh").val();
-		var fyCh = $("#fyCh").val();	
-		var fyFh = $("#fyFh").val();
-		if(fyXqCode!="" && fyDh!="" && fyCh!="" && fyFh!=""){
-			// 给房屋坐落地址赋值
-			$("#fyZldz").val($('#fyDh option:selected').text() + fyCh + "-" + fyFh);
-			// 异步判断该房室是否存在，如果已存在，给用户已提示哦
-			$.ajax({
-				type:"POST",
-				url:"checkFyFhIsExists.action",
-				data:{"fangyuanEntity.fyID":fyID,"fangyuanEntity.fyXqCode":fyXqCode, "fangyuanEntity.fyDhCode":fyDh, "fangyuanEntity.fyCh":fyCh, "fangyuanEntity.fyFh":fyFh},
-				dataType : "text",
-				success:function(data){
-// 					alert(data);
-					// 如果返回数据不为空，更改“房源信息”
-					if(data=="1"){
-						 art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'该房室在系统中已经存在哦，\n请维护其他房室数据', ok:true,});
-						 $("#fyFh").css("background", "#EEE");
-						 $("#fyFh").focus();
-						 return false;
-					}
-				}
-			});
-		}
-	}
+
 	
 	/** 检测房源房号是否存在并提交form  **/
 	function checkFyFhSubmit(){
@@ -82,8 +53,8 @@
 	/** 表单验证  **/
 	function validateForm(){
 
-		if($("#fyZldz5").val()==""){
-			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写保存文件名', ok:true,});
+		if($("#fyZldz3").val()==""){
+			art.dialog({icon:'error', title:'友情提示', drag:false, resize:false, content:'填写唯一标识', ok:true,});
 			return false;
 		}
 		if($("#fyZldz7").val()==""){
@@ -107,7 +78,12 @@
 		</div>
 		<div class="ui_content">
 			<table  cellspacing="0" cellpadding="0" width="100%" align="left" border="0">
-
+				<tr>
+					<td class="ui_text_rt">产品唯一标识</td>
+					<td class="ui_text_lt">
+						<input type="text" id="fyZldz3" maxlength="5" name="proId" th:value="" class="ui_input_txt02"/>
+					</td>
+				</tr>
 				<tr>
 					<td class="ui_text_rt">选择时间</td>
 					<td class="ui_text_lt">

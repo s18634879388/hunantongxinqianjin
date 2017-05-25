@@ -97,9 +97,9 @@ public class RecordService {
         return res;
     }
 
-    public List<UserOpen> getMobileAndUser(String chooseTime) throws ParseException {
+    public List<UserOpen> getMobileAndUser(String chooseTime,Long proId) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date cTime =  simpleDateFormat.parse(chooseTime);
-        return userOpenMapper.getMobileAndUser(cTime);
+        return userOpenMapper.getMobileAndUser(cTime,proId);
     }
 }
