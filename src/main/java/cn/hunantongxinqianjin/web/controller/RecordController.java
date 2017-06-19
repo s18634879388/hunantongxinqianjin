@@ -23,6 +23,7 @@ import java.io.*;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -89,5 +90,15 @@ public class RecordController {
         workbook.write(fileOutputStream);
         fileOutputStream.close();
         return "操作成功";
+    }
+
+
+    @RequestMapping(value = "/getRecordByDate",method = RequestMethod.POST)
+    public String getRecordByDate(Model model, @RequestParam(value = "chooseTime")String chooseTime) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date cTime =  simpleDateFormat.parse(chooseTime);
+        List<Product> products = productService.getRecordByDate(cTime);
+        model.addAttribute("products",products);
+        return "backpronum_list2";
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,6 +21,8 @@ public class ProductService {
     ProductMapper productMapper;
     @Autowired
     OSSClientUtil ossClient;
+    @Autowired
+    RecordService recordService;
 
     /**
      * 获取所有上架的产品 根据修改时间倒序排列
@@ -107,5 +110,15 @@ public class ProductService {
             int res =  productMapper.modifyProState(state,id);
             return res;
         }
+    }
+
+    public List<Product> getRecordByDate(Date cTime) {
+        List<Product> products = productMapper.getAllProducts();
+        for (Product p:products
+                ) {
+            int clicknum = recordService.getCountByPro(p.getId(),cTime);
+            p.setClickNum(clicknum);
+        }
+        return products;
     }
 }

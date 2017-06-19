@@ -40,6 +40,10 @@
         </if>
     </select>
 
+    <select id="getCountByProAndDate" resultType="java.lang.Integer">
+        SELECT count(*) from record where product_id=#{0} AND date(created_at) = #{1}
+    </select>
+
 
 
 

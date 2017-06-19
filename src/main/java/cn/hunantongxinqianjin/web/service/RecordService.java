@@ -102,4 +102,9 @@ public class RecordService {
         Date cTime =  simpleDateFormat.parse(chooseTime);
         return userOpenMapper.getMobileAndUser(cTime,proId);
     }
+
+    public int getCountByPro(Long id, Date cTime) {
+        int count = recordMapper.getCountByProAndDate(id,cTime);
+        return count;
+    }
 }
