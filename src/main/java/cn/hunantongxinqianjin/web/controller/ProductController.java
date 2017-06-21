@@ -39,7 +39,7 @@ public class ProductController {
      * @return
      */
     @RequestMapping(value = "/home",method = RequestMethod.GET)
-    public String freeMarkerDemo(Model model){
+    public String freeMarkerDemo(Model model,@RequestParam(value = "last",required = false) String last){
         List<Product> products = productService.getAllProducts();
         model.addAttribute("list1",products);
         model.addAttribute("proUpdate",products.get(0).getUpdatedAt());
